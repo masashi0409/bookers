@@ -18,7 +18,10 @@ class BooksController < ApplicationController
       redirect_to book_path(@book.id)
     else
       @books = Book.all
-      render :index
+      flash[:error] = @book.errors.full_messages.count
+      msg = @book.errors.full_messages.join(',')
+      flash[:danger] = msg.gsub(",","<br>")
+      redirect_to books_path
     end
   end
   def edit

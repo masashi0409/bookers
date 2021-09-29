@@ -18,15 +18,15 @@
 
 </table>
 <h3>New book</h3>
-<% if @book %>
-<% if @book.errors.any? %>
+<% if flash[:danger] %>
   <div style="color:red">
-    <h4><%= @book.errors.count %> errors prohibited this book from being saved:</h4>
-    <% @book.errors.full_messages.each do |message| %>
-      <p>・<%= message %></p>
+    <h4><%= flash[:error] %> errors prohibited this book from being saved:</h4>
+    <% flash.each do |message_type, message| %>
+      <% if message_type == 'danger' %>
+        <%=message.html_safe %>
+      <% end%>
     <% end %>
   </div>
-<% end %>
 <% end %>
 <%= form_with model:@book, local:true do |f| %>
 
